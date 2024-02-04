@@ -137,6 +137,27 @@ def solveNQueens(n):
 first, second = solveNQueens(4)
 for row in first:
     print(row)
+
+-------------------------------------------------------------------------
+
+def findProfit(jobs):
+    jobs.sort(key=lambda x: x[2],reverse=True)
+    result = []
+    profit = 0
+    for job in jobs:
+        deadline = job[1]
+        while deadline > 0 and result.count(None) < deadline:
+            result.append(job[0])
+            profit += job[2]
+            break
+    return result, profit
+
+
+jobs = [("j1", 2, 200), ("j2", 1, 350), ("j3", 3, 100)]
+schedule, profit = findProfit(jobs)
+print(schedule)
+print(profit)
+
 print()
 for row in second:
     print(row)
