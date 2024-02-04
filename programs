@@ -125,33 +125,19 @@ print("The Subset is found",isSubset(num,target,n))
 
 -------------------------------------------------------------------------
 
+from itertools import permutations
 def solveNQueens(n):
-    def could_place(row, col):
-        for i in range(row):
-            if board[i] == col or \
-                    board[i] - i == col - row or \
-                    board[i] + i == col + row:
-                return False
-        return True
-
-    def place_queens(n, row):
-        if row == n:
-            result.append(board[:])
-            return
-        for col in range(n):
-            if could_place(row, col):
-                board[row] = col
-                place_queens(n, row + 1)
-                board[row] = 0
-
-    result = []
-    board = [0] * n
-    place_queens(n, 0)
-    return [["0 " * i + "Q" + " 0" * (n - i - 1) for i in sol] for sol in result]
-
+    return [
+            ["0 " * i + "Q" + " 0" * (n - i - 1) for i in p]
+            for p in permutations(range(n))
+            if len(set(map(lambda z: z[0] - z[1], enumerate(p))))
+            == len(set(map(lambda z: z[0] + z[1], enumerate(p))))
+            == n
+        ]
 first, second = solveNQueens(4)
 for row in first:
     print(row)
 print()
 for row in second:
     print(row)
+
